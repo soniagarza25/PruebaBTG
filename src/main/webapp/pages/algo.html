@@ -1,0 +1,190 @@
+<html><head>
+<meta charset="UTF-8">
+<title>Landing Page</title>
+<!-- <link rel="stylesheet" type="text/javascript" href="css/style.jsp"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	
+  </head>
+  <body align="center"  class="defaultwindow">
+	<div class="userInfoWindow" style="background-color: red;>
+		
+		<table class="formContainer">
+			<tbody><tr><td>
+				<div class="formOnline"><table>
+			</tr>
+				
+		<div name="a" id="a"  method="get">
+			<h1 style="background-color: #ff0e64; color: #ffffff; text-align: center;">Formulario</h1>
+			</table>
+		</div>
+		
+			<form name="f" id="f" action="landingpage" method="post">
+
+				<tr>
+					<td>
+						<input type="number" name="nombres" id="nombres" style="width:50%" placeholder="Nombres"  required>                             
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="formfield">
+						<input type="text" name="apellidos" id="apellidos" style="width:50%" placeholder="Apellidos" required >                   
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="formfield">
+						<input type="mail" name="email"  id="emial" style="width:50%" placeholder="Email" required>                          
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="formfield">
+						<input type="text" name="telefono" id="telefono" style="width:50%" placeholder="Telefono" required >                          
+					</td>
+				</tr>
+				<tr >
+					<td class="formfield">
+					<br>
+						<select name="tipodepqr" id="tipodepqr" style="width:50%" required>
+						<option value="">Tipo de PQR</option>
+						<option value="reclamo">Reclamo</option>
+						<option value="peticion">Petición</option>
+						<option value="queja">Queja</option>
+						</select>                          
+					</td>
+				</tr>
+				
+				<BR>
+				<BR>
+			<tr>
+				<td align="center" colspan="2" style="padding-bottom: 40px;" class="button">
+							<input type="submit" name="submitForm" id="submitForm" value="Crear PQR">
+				</td>
+			</tr>
+			</form>
+			
+				</tr>
+			
+			</tbody>
+			
+			</table>
+			</div>
+
+<script>
+	 $("#submitForm").click(function () {
+
+		   var mensaje = '';
+		   var continuar = false; 
+
+	       var opcion = confirm("Esta seguro de que reviso los datos y que los quiere almacenar?");
+	       
+		    if (opcion == true) {
+						
+		    	
+				var		nombres 			=  	   $('#nombres').val();   
+				var     apellidos 			=      $('#apellidos').val();    
+				var     email 				=      $('#email').val();   
+				var     telefono 			=      $('#telefono').val();       
+				var     tipodepqr 			=      $('#tipodepqr').val();                    
+
+				if (nombres == null || nombres == '' ){
+					confirm("Falta Nombre de Cliente");
+					return false;
+				}
+
+				if (apellidos == null || apellidos == ''){
+					window.alert('Falta Apellidos');
+					return false;
+				}
+		   
+		       if ((!isValidEmail(email))) {
+		    	   window.alert('El formato del correo es invalido');
+					return false;
+		       }
+		   
+		       if (Jtrim(email).length && !isValidEmail(email)) {
+		    	   window.alert('El correo electrónico no es valido.');
+		   			return false;
+			    }
+					   
+		       if (!/^([0-9])*$/.test(telefono) || !(telefono.length >= 7 && telefono.value.length <= 10)) {
+		    	   window.alert('El Telefono es incorrecto.');
+		    		return false;
+			     }
+		   
+			} else{
+				if (!continuar && (mensaje != null && mensaje != '' && mensaje.length > 0)){
+					window.alert('Los campos que se relacionan a continuación son obligatorios.\n'+mensaje+'\n\nPor favor diligencie la información obligatoria y vuelva a intentar enviar la información.');
+					mensaje = '';
+					return false;	
+				}
+			}
+
+	   function isBlank(val) {
+
+	           if (val == null) {
+	               return true;
+	           }
+	           for (var i = 0; i < val.length; i++) {
+	               if ((val.charAt(i) != ' ') && (val.charAt(i) != "\t") && (val.charAt(i) != "\n") && (val.charAt(i) != "\r")) {
+	                   return false;
+	               }
+	           }
+
+	           return true;
+	       }
+
+	   function isInteger(val) {
+
+	           if (isBlank(val)) {
+	               return false;
+	           }
+	           for (var i = 0; i < val.length; i++) {
+	               if (! isDigit(val.charAt(i))) {
+	                   return false;
+	               }
+	           }
+
+	           return true;
+	       }
+
+	  function isValidEmail(str) {
+	           if(!Jtrim(str).length){
+	             return false;
+	           }
+
+	   		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	   		return re.test(str);
+	   }
+
+	   function Jtrim(st) {
+	   	     if (st==undefined) {
+	   			    return false;
+	   		 }
+
+	           var len = st.length;
+	           var begin = 0, end = len - 1;
+	           while (st.charAt(begin) == " " && begin < len) {
+	               begin++;
+	           }
+	           while (st.charAt(end) == " " && end > begin) {
+	               end--;
+	           }
+
+	           return st.substring(begin, end + 1);
+	       }
+
+	   function isValidCharacter(letter) {
+	   	return (/^[A-Za-záéíóú\s]+$/).test(letter);
+	   	}
+
+	   function isDigit(num) {
+	    	return (/^([0-9])*$/).test(num);
+	   	}
+	 });
+
+	</script>
+		
+</body></html>
